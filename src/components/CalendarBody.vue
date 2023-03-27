@@ -2,7 +2,7 @@
   <section class="calendar-body">
     <h1 class="calendar-body__title">Jobsity's Calendar</h1>
     <h3 @click="changeMonth(previousMonth)">← {{ previousMonth }}</h3>
-    <h2>{{ selectedMonthName }}</h2>
+    <h2>{{ selectedMonthName }} {{  currentYear }}</h2>
     <h3 @click="changeMonth(nextMonth)">{{ nextMonth }} →</h3>
     <div class="calendar-body__main">
       <span class="calendar-body__main--week-days">Sunday</span>
@@ -94,10 +94,16 @@ export default defineComponent({
     },
     nextMonth() {
       const { selectedMonth } = storeToRefs(useReminderStore())
+      if(selectedMonth.value + 1 == 12) {
+        return this.monthNames[0]
+      }
       return this.monthNames[selectedMonth.value + 1]
     },
     previousMonth() {
       const { selectedMonth } = storeToRefs(useReminderStore())
+      if(selectedMonth.value - 1 == -1) {
+        return this.monthNames[11]
+      }
       return this.monthNames[selectedMonth.value - 1]
     }
   }
