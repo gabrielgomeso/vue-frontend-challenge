@@ -48,8 +48,11 @@ export default defineComponent({
   methods: {
     addReminder() {
       const { addReminder } = useReminderStore();
+      const [year, month, day] = this.reminderDate.split('-');
+      const date = new Date(year, month - 1, day);
+
       let newReminder = {
-        date: this.reminderDate,
+        date: date,
         time: this.reminderTime,
         text: this.reminderText,
         city: this.reminderCity,
