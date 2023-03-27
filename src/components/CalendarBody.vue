@@ -38,38 +38,15 @@ export default defineComponent({
       selectedMonth: 0,
       selectedYear: 0,
       selectedDay: 0,
-      isReminderOpen: false,
-      reminders: [],
-      reminderText: '',
-      reminderCity: '',
-      reminderColor: 'red',
     };
   },
   methods: {
-    isCurrentDay(days) {
-      if (this.currentDate.getDate() === days) {
+    isCurrentDay(day) {
+      if (this.currentDate.getDate() === day) {
         return true;
       }
       return false;
     },
-    addReminder() {
-      let newReminder = {
-        date: new Date(this.selectedYear, this.selectedMonth, this.selectedDay),
-        reminder: this.reminderText,
-        city: this.reminderCity,
-        color: this.reminderColor
-      };
-
-      console.log(newReminder.date);
-
-      this.reminders.push(newReminder);
-    },
-    sortReminders(selectedMonth, day, selectedYear) {
-      let reminderDate = new Date(selectedYear, selectedMonth, day);
-      console.log(reminderDate);
-      const filteredReminders = this.reminders.filter((reminder) => reminder.date === reminderDate);
-      return filteredReminders;
-    }
   },
   computed: {
     startDayColumn() {
