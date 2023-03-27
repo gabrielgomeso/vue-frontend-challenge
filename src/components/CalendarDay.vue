@@ -3,14 +3,16 @@
     <span class="calendar-day__number">
       {{  day }}
     </span>
-    <span
-      class="calendar-day__reminder"
-      v-for="(reminder, index) in reminders"
-      :key="index"
-      :style="{ backgroundColor: reminder.color }"
-    >
-        {{  stringTruncate(reminder.text) }}
-    </span>
+    <div class="calendar-day__reminder-list">
+      <span
+        class="calendar-day__reminder"
+        v-for="(reminder, index) in reminders"
+        :key="index"
+        :style="{ backgroundColor: reminder.color }"
+      >
+          {{  stringTruncate(reminder.text) }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -23,7 +25,7 @@ export default defineComponent({
   props: ['day'],
   methods: {
     stringTruncate(string) {
-      let dots = string.length > length ? '...' : '';
+      let dots = string.length > 20 ? '...' : '';
       return string.substring(0, 20) + dots;
     }
   },
@@ -43,7 +45,13 @@ export default defineComponent({
   position: relative;
   background-color: var(--vt-c-white-soft);
   min-width: 100px;
-  min-height: 100px;
+  min-height: 120px;
+}
+
+.calendar-day__reminder-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .calendar-day__number {
@@ -53,6 +61,7 @@ export default defineComponent({
 }
 
 .calendar-day__reminder {
-  font-size: 12px;
+  text-align: justify;
+  font-size: 11px;
 }
 </style>
