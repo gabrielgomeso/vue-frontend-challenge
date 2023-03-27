@@ -18,12 +18,15 @@ export default defineComponent({
   padding: 1rem;
   border: 1px solid black;
   position: relative;
+  background-color: var(--vt-c-white-soft);
+  min-width: 100px;
+  min-height: 100px;
 }
 
 .calendar-day--number {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 5px;
+  left: 10px;
 }
 
 .calendar-day:hover:before {

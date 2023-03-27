@@ -74,6 +74,12 @@ export default defineComponent({
   grid-template-rows: auto;
 }
 
+.week-days p {
+  font-weight: 800;
+  color: white;
+  background-color: blueviolet;
+}
+
 .current-day {
   background-color: gray;
 }
