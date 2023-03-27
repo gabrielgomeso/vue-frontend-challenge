@@ -30,8 +30,4 @@ export default defineComponent({
   top: 5px;
   left: 10px;
 }
-
-.calendar-day:hover:before {
-  content: "+";
-}
 </style>
