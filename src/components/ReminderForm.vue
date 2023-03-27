@@ -1,5 +1,6 @@
 <template>
   <div class="reminder-form">
+    <h2>Create new reminder</h2>
     <label for="reminder">
       Reminder
       <input type="text" name="reminder" v-model="reminderText" placeholder="Write the reminder you want to add." maxlength="30">
@@ -8,6 +9,11 @@
     <label for="city">
       City
       <input type="text" name="city" v-model="reminderCity" placeholder="Write the city you want to add a reminder for.">
+    </label>
+
+    <label for="reminder-color">
+      Reminder Color
+      <input type="color" name="reminder-color" v-model="reminderColor" placeholder="Select the reminder color.">
     </label>
 
     <button type="button" @click="addReminder()">Add reminder</button>
@@ -23,7 +29,7 @@ export default defineComponent({
     return {
       reminderText: '',
       reminderCity: '',
-      reminderColor: 'red',
+      reminderColor: '',
     };
   },
   methods: {
@@ -41,3 +47,11 @@ export default defineComponent({
   }
 });
 </script>
+
+<style>
+.reminder-form {
+  display: flex;
+  flex-direction: column;
+}
+
+</style>
