@@ -11,17 +11,13 @@
       <span class="calendar-body__main--week-days">Thursday</span>
       <span class="calendar-body__main--week-days">Friday</span>
       <span class="calendar-body__main--week-days">Saturday</span>
-
       <CalendarDay
-        v-for="(days, index) in totalDays"
-        :key="days"
-        :class="{ 'current-day': isCurrentDay(days) }"
+        v-for="(day, index) in totalDaysInCurrentMonth"
+        :key="day"
+        :class="{ 'current-day': isCurrentDay(day) }"
         :style="{ gridColumnStart: index === 0 ? startDayColumn : 'auto' }"
-        @click="selectDate(selectedMonth, days, selectedYear)"
-        :reminders="sortReminders(selectedMonth, days, selectedYear)"
-      >
-          {{  days  }}
-      </CalendarDay>
+        :day="day"
+      />
     </div>
   </section>
 </template>
@@ -29,6 +25,7 @@
 <script>
 import { defineComponent } from 'vue';
 import CalendarDay from './CalendarDay.vue';
+import { useReminderStore } from '../stores/reminderStore';
 
 export default defineComponent({
   name: 'CalendarBody',
@@ -37,7 +34,6 @@ export default defineComponent({
   },
   data() {
     return {
-      totalDays: 0,
       currentDate: new Date(),
       selectedMonth: 0,
       selectedYear: 0,
@@ -50,19 +46,11 @@ export default defineComponent({
     };
   },
   methods: {
-    getDays(year, month) {
-      return new Date(year, month, 0).getDate();
-    },
     isCurrentDay(days) {
       if (this.currentDate.getDate() === days) {
         return true;
       }
       return false;
-    },
-    selectDate(selectedMonth, day, selectedYear) {
-      console.log(selectedMonth, day, selectedYear);
-      this.selectedDay = day;
-      this.isReminderOpen = true;
     },
     addReminder() {
       let newReminder = {
@@ -93,12 +81,11 @@ export default defineComponent({
     },
     currentYear() {
       return this.currentDate.getFullYear();
+    },
+    totalDaysInCurrentMonth() {
+      let { totalDaysInCurrentMonth } = useReminderStore();
+      return totalDaysInCurrentMonth;
     }
-  },
-  beforeMount() {
-    this.selectedMonth = this.currentMonth;
-    this.selectedYear = this.currentYear;
-    this.totalDays = this.getDays(2023, 3);
   },
 });
 </script>
@@ -118,22 +105,5 @@ export default defineComponent({
 
 .current-day {
   background-color: gray;
-}
-
-.calendar-reminder {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  align-items: center;
-  justify-content: center;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
