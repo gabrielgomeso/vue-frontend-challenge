@@ -2,6 +2,7 @@
   <div class="calendar-day">
     <span class="calendar-day--number">
       <slot></slot>
+      {{  reminders }}
     </span>
   </div>
 </template>
@@ -11,6 +12,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'CalendarDay',
+  props: ['reminders'],
 });
 </script>
 <style>

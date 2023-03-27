@@ -1,0 +1,43 @@
+<template>
+  <div class="reminder-form">
+    <label for="reminder">
+      Reminder
+      <input type="text" name="reminder" v-model="reminderText" placeholder="Write the reminder you want to add." maxlength="30">
+    </label>
+
+    <label for="city">
+      City
+      <input type="text" name="city" v-model="reminderCity" placeholder="Write the city you want to add a reminder for.">
+    </label>
+
+    <button type="button" @click="addReminder()">Add reminder</button>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'ReminderForm',
+  data() {
+    return {
+      reminderText: '',
+      reminderCity: '',
+      reminderColor: 'red',
+    };
+  },
+  methods: {
+    addReminder() {
+      let newReminder = {
+        date: new Date(this.selectedYear, this.selectedMonth, this.selectedDay),
+        reminder: this.reminderText,
+        city: this.reminderCity,
+        color: this.reminderColor
+      };
+
+      this.reminders.push(newReminder);
+      console.log(this.reminders.length);
+    },
+  }
+});
+</script>
