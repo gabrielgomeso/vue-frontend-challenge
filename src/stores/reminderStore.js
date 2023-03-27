@@ -24,6 +24,8 @@ export const useReminderStore = defineStore('reminder', () => {
     },
   ]);
 
+  const selectedDay = ref(currentDate);
+
   function addReminder(reminder) {
     reminders.value.push(reminder);
   }
@@ -33,5 +35,5 @@ export const useReminderStore = defineStore('reminder', () => {
     return remindersOfDay
   }
 
-  return { reminders, addReminder, totalDaysInCurrentMonth, remindersOfDate }
+  return { reminders, selectedDay, addReminder, totalDaysInCurrentMonth, remindersOfDate }
 })
