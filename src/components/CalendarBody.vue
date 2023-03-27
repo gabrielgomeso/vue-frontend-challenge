@@ -3,6 +3,9 @@
     <h1 class="calendar-body__title">
       Jobsity's Calendar
     </h1>
+    <h3 @click="changeMonth(previousMonth)">← {{ previousMonth }}</h3>
+    <h2>{{ selectedMonthName }}</h2>
+    <h3 @click="changeMonth(nextMonth)"> {{ nextMonth }} →</h3>
     <div class="calendar-body__main">
       <span class="calendar-body__main--week-days">Sunday</span>
       <span class="calendar-body__main--week-days">Monday</span>
@@ -12,7 +15,7 @@
       <span class="calendar-body__main--week-days">Friday</span>
       <span class="calendar-body__main--week-days">Saturday</span>
       <CalendarDay
-        v-for="(day, index) in totalDaysInCurrentMonth"
+        v-for="(day, index) in totalDaysInSelectedMonth"
         :key="day"
         :class="{ 'current-day': isCurrentDay(day) }"
         :style="{ gridColumnStart: index === 0 ? startDayColumn : 'auto' }"
@@ -37,9 +40,8 @@ export default defineComponent({
   data() {
     return {
       currentDate: new Date(),
-      selectedMonth: 0,
-      selectedYear: 0,
       selectedDay: 0,
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     };
   },
   methods: {
@@ -52,11 +54,17 @@ export default defineComponent({
     selectNewDay(day) {
       const { selectedDay } = storeToRefs(useReminderStore());
       selectedDay.value = new Date(2023, 2, day)
+    },
+    changeMonth(month) {
+      const { selectedMonth } = storeToRefs(useReminderStore());
+      const newMonth = this.monthNames.findIndex((element) => element == month );
+      selectedMonth.value = newMonth;
     }
   },
   computed: {
     startDayColumn() {
-      const firstDayOfWeek = new Date(this.currentYear, this.currentMonth, 1).getDay();
+      const { selectedMonth } = storeToRefs(useReminderStore());
+      const firstDayOfWeek = new Date(this.currentYear, selectedMonth.value, 1).getDay();
       return firstDayOfWeek + 1; // Add 1 to make it 1-indexed for grid-column-start
     },
     currentMonth() {
@@ -65,9 +73,21 @@ export default defineComponent({
     currentYear() {
       return this.currentDate.getFullYear();
     },
-    totalDaysInCurrentMonth() {
-      let { totalDaysInCurrentMonth } = useReminderStore();
-      return totalDaysInCurrentMonth;
+    totalDaysInSelectedMonth() {
+      const { totalDaysInSelectedMonth } = useReminderStore();
+      return totalDaysInSelectedMonth;
+    },
+    selectedMonthName() {
+      const { selectedMonth } = storeToRefs(useReminderStore());
+      return this.monthNames[selectedMonth.value];
+    },
+    nextMonth() {
+      const { selectedMonth } = storeToRefs(useReminderStore());
+      return this.monthNames[selectedMonth.value + 1];
+    },
+    previousMonth() {
+      const { selectedMonth } = storeToRefs(useReminderStore());
+      return this.monthNames[selectedMonth.value - 1];
     }
   },
 });

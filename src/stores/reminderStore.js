@@ -5,7 +5,6 @@ export const useReminderStore = defineStore('reminder', () => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
-  const totalDaysInCurrentMonth = new Date(currentYear, currentMonth+1, 0).getDate();
 
   const reminders = ref([
     {
@@ -25,6 +24,8 @@ export const useReminderStore = defineStore('reminder', () => {
   ]);
 
   const selectedDay = ref(currentDate);
+  const selectedMonth = ref(currentMonth);
+  const totalDaysInSelectedMonth = new Date(currentYear, selectedMonth.value + 1, 0).getDate();
 
   function addReminder(reminder) {
     reminders.value.push(reminder);
@@ -35,5 +36,5 @@ export const useReminderStore = defineStore('reminder', () => {
     return remindersOfDay
   }
 
-  return { reminders, selectedDay, addReminder, totalDaysInCurrentMonth, remindersOfDate }
+  return { reminders, selectedDay, selectedMonth, addReminder, totalDaysInSelectedMonth, remindersOfDate }
 })
