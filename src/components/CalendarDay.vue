@@ -1,18 +1,39 @@
 <template>
   <div class="calendar-day">
-    <span class="calendar-day--number">
-      <slot></slot>
-      {{  reminders }}
+    <span class="calendar-day__number">
+      {{  day }}
+    </span>
+    <span
+      class="calendar-day__reminder"
+      v-for="(reminder, index) in reminders"
+      :key="index"
+      :style="{ backgroundColor: reminder.color }"
+    >
+        {{  stringTruncate(reminder.text) }}
     </span>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useReminderStore } from '../stores/reminderStore';
 
 export default defineComponent({
   name: 'CalendarDay',
-  props: ['reminders'],
+  props: ['day'],
+  methods: {
+    stringTruncate(string) {
+      let dots = string.length > length ? '...' : '';
+      return string.substring(0, 20) + dots;
+    }
+  },
+  computed: {
+    reminders() {
+      const { remindersOfDate } = useReminderStore();
+      
+      return remindersOfDate(new Date(2023, 2, this.day));
+    }
+  }
 });
 </script>
 <style>
@@ -25,9 +46,13 @@ export default defineComponent({
   min-height: 100px;
 }
 
-.calendar-day--number {
+.calendar-day__number {
   position: absolute;
   top: 5px;
   left: 10px;
+}
+
+.calendar-day__reminder {
+  font-size: 12px;
 }
 </style>
