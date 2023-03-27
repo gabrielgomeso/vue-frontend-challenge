@@ -2,18 +2,28 @@
   <div class="reminder-form">
     <h2>Create new reminder</h2>
     <label class="reminder-form__label" for="reminder">
+      Reminder Date
+      <input type="date" name="reminder-date" v-model="reminderDate">
+    </label>
+
+    <label class="reminder-form__label" for="reminder">
+      Reminder Time
+      <input type="time" name="reminder-time" v-model="reminderTime">
+    </label>
+
+    <label class="reminder-form__label" for="reminder">
       Reminder
-      <input type="text" name="reminder" v-model="reminderText" placeholder="Write the reminder you want to add." maxlength="30">
+      <input type="text" name="reminder" v-model="reminderText" placeholder="Write what you want to remind!" maxlength="30">
     </label>
 
     <label class="reminder-form__label" for="city">
       City
-      <input type="text" name="city" v-model="reminderCity" placeholder="Write the city you want to add a reminder for.">
+      <input type="text" name="city" v-model="reminderCity" placeholder="Write the city you want to add a reminder for!">
     </label>
 
     <label class="reminder-form__label" for="reminder-color">
       Reminder Color
-      <input type="color" name="reminder-color" v-model="reminderColor" placeholder="Select the reminder color.">
+      <input type="color" name="reminder-color" v-model="reminderColor">
     </label>
 
     <button type="button" @click="addReminder()">Add reminder</button>
@@ -22,6 +32,7 @@
 
 <script>
 import { defineComponent } from 'vue';
+import { useReminderStore } from '../stores/reminderStore';
 
 export default defineComponent({
   name: 'ReminderForm',
@@ -29,22 +40,25 @@ export default defineComponent({
     return {
       reminderText: '',
       reminderCity: '',
-      reminderColor: '',
+      reminderColor: 'green',
+      reminderDate: null,
+      reminderTime: null,
     };
   },
   methods: {
     addReminder() {
+      const { addReminder } = useReminderStore();
       let newReminder = {
-        date: new Date(this.selectedYear, this.selectedMonth, this.selectedDay),
-        reminder: this.reminderText,
+        date: this.reminderDate,
+        time: this.reminderTime,
+        text: this.reminderText,
         city: this.reminderCity,
         color: this.reminderColor
       };
 
-      this.reminders.push(newReminder);
-      console.log(this.reminders.length);
+      addReminder(newReminder)
     },
-  }
+  },
 });
 </script>
 
