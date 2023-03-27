@@ -17,6 +17,7 @@
         :class="{ 'current-day': isCurrentDay(day) }"
         :style="{ gridColumnStart: index === 0 ? startDayColumn : 'auto' }"
         :day="day"
+        @click="selectNewDay(day)"
       />
     </div>
   </section>
@@ -26,6 +27,7 @@
 import { defineComponent } from 'vue';
 import CalendarDay from './CalendarDay.vue';
 import { useReminderStore } from '../stores/reminderStore';
+import { storeToRefs } from 'pinia';
 
 export default defineComponent({
   name: 'CalendarBody',
@@ -47,6 +49,10 @@ export default defineComponent({
       }
       return false;
     },
+    selectNewDay(day) {
+      const { selectedDay } = storeToRefs(useReminderStore());
+      selectedDay.value = new Date(2023, 2, day)
+    }
   },
   computed: {
     startDayColumn() {
