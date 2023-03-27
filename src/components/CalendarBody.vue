@@ -1,11 +1,9 @@
 <template>
   <section class="calendar-body">
-    <h1 class="calendar-body__title">
-      Jobsity's Calendar
-    </h1>
+    <h1 class="calendar-body__title">Jobsity's Calendar</h1>
     <h3 @click="changeMonth(previousMonth)">← {{ previousMonth }}</h3>
     <h2>{{ selectedMonthName }}</h2>
-    <h3 @click="changeMonth(nextMonth)"> {{ nextMonth }} →</h3>
+    <h3 @click="changeMonth(nextMonth)">{{ nextMonth }} →</h3>
     <div class="calendar-body__main">
       <span class="calendar-body__main--week-days">Sunday</span>
       <span class="calendar-body__main--week-days">Monday</span>
@@ -27,70 +25,83 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import CalendarDay from './CalendarDay.vue';
-import { useReminderStore } from '../stores/reminderStore';
-import { storeToRefs } from 'pinia';
+import { defineComponent } from 'vue'
+import CalendarDay from './CalendarDay.vue'
+import { useReminderStore } from '../stores/reminderStore'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'CalendarBody',
   components: {
-    CalendarDay,
+    CalendarDay
   },
   data() {
     return {
       currentDate: new Date(),
       selectedDay: 0,
-      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    };
+      monthNames: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ]
+    }
   },
   methods: {
     isCurrentDay(day) {
       if (this.currentDate.getDate() === day) {
-        return true;
+        return true
       }
-      return false;
+      return false
     },
     selectNewDay(day) {
-      const { selectedDay } = storeToRefs(useReminderStore());
+      const { selectedDay } = storeToRefs(useReminderStore())
       selectedDay.value = new Date(2023, 2, day)
     },
     changeMonth(month) {
-      const { selectedMonth } = storeToRefs(useReminderStore());
-      const newMonth = this.monthNames.findIndex((element) => element == month );
-      selectedMonth.value = newMonth;
+      const { selectedMonth } = storeToRefs(useReminderStore())
+      const newMonth = this.monthNames.findIndex((element) => element == month)
+      selectedMonth.value = newMonth
     }
   },
   computed: {
     startDayColumn() {
-      const { selectedMonth } = storeToRefs(useReminderStore());
-      const firstDayOfWeek = new Date(this.currentYear, selectedMonth.value, 1).getDay();
-      return firstDayOfWeek + 1; // Add 1 to make it 1-indexed for grid-column-start
+      const { selectedMonth } = storeToRefs(useReminderStore())
+      const firstDayOfWeek = new Date(this.currentYear, selectedMonth.value, 1).getDay()
+      return firstDayOfWeek + 1 // Add 1 to make it 1-indexed for grid-column-start
     },
     currentMonth() {
-      return this.currentDate.getMonth();
+      return this.currentDate.getMonth()
     },
     currentYear() {
-      return this.currentDate.getFullYear();
+      return this.currentDate.getFullYear()
     },
     totalDaysInSelectedMonth() {
-      const { totalDaysInSelectedMonth } = useReminderStore();
-      return totalDaysInSelectedMonth;
+      const { totalDaysInSelectedMonth } = useReminderStore()
+      return totalDaysInSelectedMonth
     },
     selectedMonthName() {
-      const { selectedMonth } = storeToRefs(useReminderStore());
-      return this.monthNames[selectedMonth.value];
+      const { selectedMonth } = storeToRefs(useReminderStore())
+      return this.monthNames[selectedMonth.value]
     },
     nextMonth() {
-      const { selectedMonth } = storeToRefs(useReminderStore());
-      return this.monthNames[selectedMonth.value + 1];
+      const { selectedMonth } = storeToRefs(useReminderStore())
+      return this.monthNames[selectedMonth.value + 1]
     },
     previousMonth() {
-      const { selectedMonth } = storeToRefs(useReminderStore());
-      return this.monthNames[selectedMonth.value - 1];
+      const { selectedMonth } = storeToRefs(useReminderStore())
+      return this.monthNames[selectedMonth.value - 1]
     }
-  },
-});
+  }
+})
 </script>
 
 <style>

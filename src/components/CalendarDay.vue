@@ -1,7 +1,7 @@
 <template>
   <div class="calendar-day">
     <span class="calendar-day__number">
-      {{  day }}
+      {{ day }}
     </span>
     <div class="calendar-day__reminder-list">
       <span
@@ -10,33 +10,33 @@
         :key="index"
         :style="{ backgroundColor: reminder.color }"
       >
-          {{  stringTruncate(reminder.text) }}
+        {{ stringTruncate(reminder.text) }}
       </span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useReminderStore } from '../stores/reminderStore';
+import { defineComponent } from 'vue'
+import { useReminderStore } from '../stores/reminderStore'
 
 export default defineComponent({
   name: 'CalendarDay',
   props: ['day'],
   methods: {
     stringTruncate(string) {
-      let dots = string.length > 20 ? '...' : '';
-      return string.substring(0, 20) + dots;
+      let dots = string.length > 20 ? '...' : ''
+      return string.substring(0, 20) + dots
     }
   },
   computed: {
     reminders() {
-      const { remindersOfDate } = useReminderStore();
-      
-      return remindersOfDate(new Date(2023, 2, this.day));
+      const { remindersOfDate } = useReminderStore()
+
+      return remindersOfDate(new Date(2023, 2, this.day))
     }
   }
-});
+})
 </script>
 <style>
 .calendar-day {
@@ -63,5 +63,8 @@ export default defineComponent({
 .calendar-day__reminder {
   text-align: justify;
   font-size: 11px;
+  color: white;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;
 }
 </style>
