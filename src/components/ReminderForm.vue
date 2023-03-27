@@ -57,6 +57,12 @@ export default defineComponent({
       };
 
       addReminder(newReminder)
+
+      this.reminderText = ''
+      this.reminderCity = ''
+      this.reminderColor = 'green'
+      this.reminderDate = null
+      this.reminderTime = null
     },
   },
 });
