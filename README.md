@@ -39,3 +39,17 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+I did not use Vue-CLI since its in Maintenance Mode and Vue 3 now uses a create-vue scaffold by Vite
+So the new way is npm init vue@latest
+https://www.youtube.com/watch?v=XRTa0lNxxN4
+
+Project Settings
+No Typescript - 
+No JSX Support - 
+No Vue Router -
+Pinia as state managment
+Vitest for Unit Testing with Vue Testing Library
+No End-to-End testing
+ESLint for code quality
+Prettier
