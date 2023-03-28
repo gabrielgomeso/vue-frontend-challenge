@@ -34,7 +34,7 @@ import ReminderCard from './ReminderCard.vue'
 export default defineComponent({
   name: 'ReminderList',
   components: {
-    ReminderCard,
+    ReminderCard
   },
   data() {
     return {

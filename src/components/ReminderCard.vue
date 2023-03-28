@@ -1,6 +1,6 @@
 <template>
   <section class="reminder-card__body" :style="{ backgroundColor: reminder.color }">
-    <h3 class="reminder-card__title">{{  reminder.text }}</h3>
+    <h3 class="reminder-card__title">{{ reminder.text }}</h3>
     <div class="reminder-card__time-and-place">
       <span>{{ reminder.time }} - {{ reminder.date.toLocaleDateString() }}</span>
       <span>{{ reminder.city }} ({{ reminder.weather }})</span>
@@ -21,7 +21,7 @@ export default defineComponent({
     editReminder(reminder) {
       const { reminderToEdit } = storeToRefs(useReminderStore())
       reminderToEdit.value = reminder
-    },
+    }
   }
 })
 </script>
