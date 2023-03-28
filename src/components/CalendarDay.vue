@@ -1,7 +1,7 @@
 <template>
   <div class="calendar-day">
     <span class="calendar-day__number">
-      {{ day }}
+      {{ props.day }}
     </span>
     <div class="calendar-day__reminder-list">
       <span
@@ -16,27 +16,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup>
+import { computed } from 'vue'
 import { useReminderStore } from '../stores/reminderStore'
 
-export default defineComponent({
-  name: 'CalendarDay',
-  props: ['day'],
-  methods: {
-    stringTruncate(string) {
-      let dots = string.length > 20 ? '...' : ''
-      return string.substring(0, 20) + dots
-    }
-  },
-  computed: {
-    reminders() {
-      const { remindersOfDate, selectedMonth } = useReminderStore()
+const props = defineProps(['day'])
+const { remindersOfDate, selectedMonth } = useReminderStore()
 
-      return remindersOfDate(new Date(2023, selectedMonth, this.day))
-    }
-  }
-})
+function stringTruncate(string) {
+  let dots = string.length > 20 ? '...' : ''
+  return string.substring(0, 20) + dots
+}
+
+const reminders = computed(() => {
+  return remindersOfDate(new Date(2023, selectedMonth, props.day))
+});
 </script>
 <style>
 .calendar-day {
