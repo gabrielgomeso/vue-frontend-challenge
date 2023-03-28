@@ -8,6 +8,7 @@ export const useReminderStore = defineStore('reminder', () => {
 
   const reminders = ref([
     {
+      id: 1,
       date: new Date(2023, 2, 31),
       time: '12:00',
       text: 'Gabriel Gomes gets the job',
@@ -15,6 +16,7 @@ export const useReminderStore = defineStore('reminder', () => {
       color: 'green'
     },
     {
+      id: 2,
       date: new Date(2023, 2, 2),
       time: '12:00',
       text: 'Gabriel Gomes makes the test',
@@ -27,8 +29,17 @@ export const useReminderStore = defineStore('reminder', () => {
   const selectedMonth = ref(currentMonth)
   const totalDaysInSelectedMonth = new Date(currentYear, selectedMonth.value + 1, 0).getDate()
 
+  const reminderToEdit = ref(null);
+
   function addReminder(reminder) {
     reminders.value.push(reminder)
+  }
+  
+  function editReminder(editedReminder) {
+    const index = reminders.value.findIndex(reminder => reminder.id === editedReminder.id);
+    if (index !== -1) {
+      reminders.value[index] = editedReminder;
+    }
   }
 
   function remindersOfDate(date) {
@@ -43,7 +54,9 @@ export const useReminderStore = defineStore('reminder', () => {
     selectedDay,
     selectedMonth,
     addReminder,
+    editReminder,
     totalDaysInSelectedMonth,
-    remindersOfDate
+    remindersOfDate,
+    reminderToEdit
   }
 })
