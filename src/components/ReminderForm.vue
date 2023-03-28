@@ -3,21 +3,23 @@
     <h2 v-if="reminderToEdit == null">Create new reminder</h2>
     <h2 v-else>Edit reminder {{ reminderToEdit.text }}</h2>
     <form @submit.prevent>
-      <label class="reminder-form__label" for="reminder">
-        Reminder Date
-        <input type="date" name="reminder-date" v-model="reminderDate" required />
-      </label>
+      <div class="reminder-form__date-input">
+        <label class="reminder-form__label" for="reminder-date">
+          Reminder Date
+          <input type="date" name="reminder-date" v-model="reminderDate" required />
+        </label>
 
-      <label class="reminder-form__label" for="reminder">
-        Reminder Time
-        <input type="time" name="reminder-time" v-model="reminderTime" required />
-      </label>
+        <label class="reminder-form__label" for="reminder-time">
+          Reminder Time
+          <input type="time" name="reminder-time" v-model="reminderTime" required />
+        </label>
+      </div>
 
-      <label class="reminder-form__label" for="reminder">
+      <label class="reminder-form__label" for="reminder-text">
         Reminder
         <input
           type="text"
-          name="reminder"
+          name="reminder-text"
           v-model="reminderText"
           placeholder="Write what you want to remind!"
           maxlength="30"
@@ -25,11 +27,11 @@
         />
       </label>
 
-      <label class="reminder-form__label" for="city">
+      <label class="reminder-form__label" for="reminder-city">
         City
         <input
           type="text"
-          name="city"
+          name="reminder-city"
           v-model="reminderCity"
           placeholder="Write the city you want to add a reminder for!"
           required
@@ -162,6 +164,17 @@ export default defineComponent({
 .reminder-form__label {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+.reminder-form__label {
+  padding: 5px;
+}
+
+.reminder-form__date-input {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
 }
 
 .reminder-form__actions {
