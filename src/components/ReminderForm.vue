@@ -41,10 +41,12 @@
         <input type="color" name="reminder-color" v-model="reminderColor" />
       </label>
 
-      <button v-if="reminderToEdit == null" type="submit" @click="addReminder()">Add reminder</button>
-      <button v-if="reminderToEdit != null" type="submit" @click="editReminder(reminderToEdit.id)">Edit reminder</button>
-      <button v-if="reminderToEdit != null" type="submit" @click="cancelEdit()">Cancel</button>
-      <button v-if="reminderToEdit != null" type="submit" @click="deleteReminder(reminderToEdit.id)">Delete reminder</button>
+      <div class="reminder-form__actions">
+        <button v-if="reminderToEdit == null" type="submit" @click="addReminder()">Add reminder</button>
+        <button v-if="reminderToEdit != null" type="submit" @click="editReminder(reminderToEdit.id)">Edit reminder</button>
+        <button v-if="reminderToEdit != null" type="submit" @click="cancelEdit()">Cancel</button>
+        <button v-if="reminderToEdit != null" type="submit" @click="deleteReminder(reminderToEdit.id)">Delete reminder</button>
+      </div>
     </form>
   </div>
 </template>
@@ -160,5 +162,12 @@ export default defineComponent({
 .reminder-form__label {
   display: flex;
   flex-direction: column;
+}
+
+.reminder-form__actions {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  padding: 1rem;
 }
 </style>
