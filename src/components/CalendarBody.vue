@@ -106,6 +106,12 @@ export default defineComponent({
       }
       return this.monthNames[selectedMonth.value - 1]
     }
+  },
+  watch: {
+    selectedMonthName(newValue) {
+      const { totalDaysInSelectedMonth } = storeToRefs(useReminderStore())
+      totalDaysInSelectedMonth.value = new Date(this.currentYear, this.monthNames.indexOf(newValue) + 1, 0).getDate()
+    }
   }
 })
 </script>

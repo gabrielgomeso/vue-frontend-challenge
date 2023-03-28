@@ -27,7 +27,7 @@ export const useReminderStore = defineStore('reminder', () => {
 
   const selectedDay = ref(currentDate)
   const selectedMonth = ref(currentMonth)
-  const totalDaysInSelectedMonth = new Date(currentYear, selectedMonth.value + 1, 0).getDate()
+  const totalDaysInSelectedMonth = ref(new Date(currentYear, selectedMonth.value + 1, 0).getDate());
 
   const reminderToEdit = ref(null);
 
