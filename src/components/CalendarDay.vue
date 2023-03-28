@@ -31,9 +31,9 @@ export default defineComponent({
   },
   computed: {
     reminders() {
-      const { remindersOfDate } = useReminderStore()
+      const { remindersOfDate, selectedMonth } = useReminderStore()
 
-      return remindersOfDate(new Date(2023, 2, this.day))
+      return remindersOfDate(new Date(2023, selectedMonth, this.day))
     }
   }
 })
