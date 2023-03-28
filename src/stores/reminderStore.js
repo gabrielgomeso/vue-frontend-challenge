@@ -42,6 +42,13 @@ export const useReminderStore = defineStore('reminder', () => {
     }
   }
 
+  function deleteReminder(id) {
+    const index = reminders.value.findIndex(reminder => reminder.id === id);
+    if (index !== -1) {
+      reminders.value.splice(index, 1);
+    }
+  }
+
   function remindersOfDate(date) {
     const remindersOfDay = reminders.value.filter(
       (reminder) => new Date(reminder.date).getTime() === date.getTime()
@@ -55,6 +62,7 @@ export const useReminderStore = defineStore('reminder', () => {
     selectedMonth,
     addReminder,
     editReminder,
+    deleteReminder,
     totalDaysInSelectedMonth,
     remindersOfDate,
     reminderToEdit

@@ -44,7 +44,7 @@
       <button v-if="reminderToEdit == null" type="submit" @click="addReminder()">Add reminder</button>
       <button v-if="reminderToEdit != null" type="submit" @click="editReminder(reminderToEdit.id)">Edit reminder</button>
       <button v-if="reminderToEdit != null" type="submit" @click="cancelEdit()">Cancel</button>
-      <button v-if="reminderToEdit != null" type="submit" @click="deleteReminder()">Delete reminder</button>
+      <button v-if="reminderToEdit != null" type="submit" @click="deleteReminder(reminderToEdit.id)">Delete reminder</button>
     </form>
   </div>
 </template>
@@ -113,6 +113,14 @@ export default defineComponent({
       }
 
       editReminder(editedReminder)
+      this.resetForm()
+      reminderToEdit.value = null
+    },
+    deleteReminder(id) {
+      const { deleteReminder } = useReminderStore()
+      const { reminderToEdit } = storeToRefs(useReminderStore())
+
+      deleteReminder(id)
       this.resetForm()
       reminderToEdit.value = null
     },
