@@ -1,24 +1,28 @@
 <template>
   <section class="reminder-list__body">
-    <div>
-      <h2>Reminders from {{ selectedDay.toDateString() }}</h2>
-      <div class="reminder-list__list">
-        <span
-          class="reminder-list__reminder"
-          v-for="(reminder, index) in reminders"
-          :key="index"
-          @click="editReminder(reminder)"
-        >
-          <span
-            class="reminder-list__reminder--color"
-            :style="{ backgroundColor: reminder.color }"
-          ></span>
-          {{ reminder.text }} - {{ reminder.time }} - {{ reminder.date.toLocaleDateString() }} At
-          {{ reminder.city }}
-          <!-- {{ reminderCityWeather(reminder.city, reminder.date) }} -->
-        </span>
-      </div>
+    <h2>Reminders from {{ selectedDay.toDateString() }}</h2>
+    <div v-if="isLoading" class="loading">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
+    <div v-else class="reminder-list__list">
+      <span
+        class="reminder-list__reminder"
+        v-for="(reminder, index) in fetchedReminders"
+        :key="index"
+        @click="editReminder(reminder)"
+      >
+        <span
+          class="reminder-list__reminder--color"
+          :style="{ backgroundColor: reminder.color }"
+        ></span>
+        {{ reminder.text }} - {{ reminder.time }} - {{ reminder.date.toLocaleDateString() }} At
+        {{ reminder.city }}
+        ({{ reminder.weather }})
+      </span>
+    </div>
+    
   </section>
 </template>
 
@@ -29,6 +33,12 @@ import { useReminderStore } from '../stores/reminderStore'
 
 export default defineComponent({
   name: 'ReminderList',
+  data() {
+    return {
+      fetchedReminders: [],
+      isLoading: true,
+    }
+  },
   computed: {
     selectedDay() {
       const { selectedDay } = useReminderStore()
@@ -36,29 +46,47 @@ export default defineComponent({
     },
     reminders() {
       const { remindersOfDate } = useReminderStore()
+      const reminders = remindersOfDate(this.selectedDay);
 
-      return remindersOfDate(this.selectedDay)
-    }
+      return reminders
+    },
   },
   methods: {
     editReminder(reminder) {
       const { reminderToEdit } = storeToRefs(useReminderStore())
       reminderToEdit.value = reminder
+    },
+    async fetchReminderWeather(reminder) {
+      this.isLoading = true;
+      const { city, date } = reminder;
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${import.meta.env.VITE_OPEN_WEATHER_KEY}&dt=${date}`;
+
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data.weather[0].description;
+      } catch (error) {
+        console.error(error);
+        return "No weather info for this city";
+      }
+    },
+    async remindersWithWeather() {
+      const reminders = this.reminders;
+      for (const reminder of reminders) {
+        const weather = await this.fetchReminderWeather(reminder);
+        reminder.weather = weather;
+      }
+      this.fetchedReminders = reminders;
+      this.isLoading = false;
     }
-    //   async reminderCityWeather(city, date) {
-    //     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${import.meta.env.VITE_OPEN_WEATHER_KEY}&dt=${date}`;
-
-    //     let weather;
-    //     await fetch(apiUrl)
-    //       .then(response => response.json())
-    //       .then(data => {
-    //         console.log(data);
-    //         weather = data.weather[0].description;
-    //       })
-    //       .catch(error => console.error(error));
-
-    //     return weather;
-    //   }
+  },
+  async beforeMount() {
+    await this.remindersWithWeather()
+  },
+  watch: {
+    async selectedDay() {
+      await this.remindersWithWeather()
+    }
   }
 })
 </script>
@@ -85,5 +113,44 @@ export default defineComponent({
 .reminder-list__reminder:hover:after {
   content: '- Edit';
   cursor: pointer;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.loading div {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #000;
+  margin: 0 5px;
+  animation: loading 1s ease-in-out infinite;
+}
+
+.loading div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes loading {
+  0% {
+    transform: scale(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0.7;
+  }
 }
 </style>
