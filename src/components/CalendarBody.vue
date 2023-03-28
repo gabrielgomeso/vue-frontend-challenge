@@ -59,7 +59,9 @@ export default defineComponent({
   },
   methods: {
     isCurrentDay(day) {
-      if (this.currentDate.getDate() === day) {
+      const { selectedMonth } = storeToRefs(useReminderStore())
+
+      if (this.currentDate.getDate() === day && selectedMonth.value == this.currentMonth) {
         return true
       }
       return false
