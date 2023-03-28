@@ -27,41 +27,41 @@ export const useReminderStore = defineStore('reminder', () => {
 
   const selectedDay = ref(currentDate)
   const selectedMonth = ref(currentMonth)
-  const totalDaysInSelectedMonth = ref(new Date(currentYear, selectedMonth.value + 1, 0).getDate());
+  const totalDaysInSelectedMonth = ref(new Date(currentYear, selectedMonth.value + 1, 0).getDate())
 
-  const reminderToEdit = ref(null);
+  const reminderToEdit = ref(null)
 
   function addReminder(reminder) {
     reminders.value.push(reminder)
   }
-  
+
   function editReminder(editedReminder) {
-    const index = reminders.value.findIndex(reminder => reminder.id === editedReminder.id);
+    const index = reminders.value.findIndex((reminder) => reminder.id === editedReminder.id)
     if (index !== -1) {
-      reminders.value[index] = editedReminder;
+      reminders.value[index] = editedReminder
     }
   }
 
   function deleteReminder(id) {
-    const index = reminders.value.findIndex(reminder => reminder.id === id);
+    const index = reminders.value.findIndex((reminder) => reminder.id === id)
     if (index !== -1) {
-      reminders.value.splice(index, 1);
+      reminders.value.splice(index, 1)
     }
   }
 
   function sortReminders(reminders) {
     return reminders.sort((a, b) => {
-      const timeA = a.time;
-      const timeB = b.time;
+      const timeA = a.time
+      const timeB = b.time
 
       if (timeA < timeB) {
-        return -1;
+        return -1
       } else if (timeA > timeB) {
-        return 1;
+        return 1
       } else {
-        return 0;
+        return 0
       }
-    });
+    })
   }
 
   function remindersOfDate(date) {

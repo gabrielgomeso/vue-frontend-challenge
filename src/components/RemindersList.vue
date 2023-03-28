@@ -3,7 +3,12 @@
     <div>
       <h2>Reminders from {{ selectedDay.toDateString() }}</h2>
       <div class="reminder-list__list">
-        <span class="reminder-list__reminder" v-for="(reminder, index) in reminders" :key="index" @click="editReminder(reminder)">
+        <span
+          class="reminder-list__reminder"
+          v-for="(reminder, index) in reminders"
+          :key="index"
+          @click="editReminder(reminder)"
+        >
           <span
             class="reminder-list__reminder--color"
             :style="{ backgroundColor: reminder.color }"
@@ -33,28 +38,28 @@ export default defineComponent({
       const { remindersOfDate } = useReminderStore()
 
       return remindersOfDate(this.selectedDay)
-    },
+    }
   },
   methods: {
     editReminder(reminder) {
       const { reminderToEdit } = storeToRefs(useReminderStore())
       reminderToEdit.value = reminder
-    },
-  //   async reminderCityWeather(city, date) {
-  //     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${import.meta.env.VITE_OPEN_WEATHER_KEY}&dt=${date}`;
+    }
+    //   async reminderCityWeather(city, date) {
+    //     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${import.meta.env.VITE_OPEN_WEATHER_KEY}&dt=${date}`;
 
-  //     let weather;
-  //     await fetch(apiUrl)
-  //       .then(response => response.json())
-  //       .then(data => {
-  //         console.log(data);
-  //         weather = data.weather[0].description;
-  //       })
-  //       .catch(error => console.error(error));
+    //     let weather;
+    //     await fetch(apiUrl)
+    //       .then(response => response.json())
+    //       .then(data => {
+    //         console.log(data);
+    //         weather = data.weather[0].description;
+    //       })
+    //       .catch(error => console.error(error));
 
-  //     return weather;
-  //   }
-  },
+    //     return weather;
+    //   }
+  }
 })
 </script>
 
@@ -78,7 +83,7 @@ export default defineComponent({
 }
 
 .reminder-list__reminder:hover:after {
-  content: "- Edit";
+  content: '- Edit';
   cursor: pointer;
 }
 </style>

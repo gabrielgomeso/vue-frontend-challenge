@@ -13,7 +13,7 @@ describe('ReminderForm', () => {
   })
 
   it('renders properly', () => {
-    const wrapper = mount(ReminderForm, { global: { plugins: [store] } });
+    const wrapper = mount(ReminderForm, { global: { plugins: [store] } })
     expect(wrapper.text()).toContain('Create new reminder')
   })
 
@@ -22,8 +22,8 @@ describe('ReminderForm', () => {
 
     const wrapper = mount(ReminderForm, {
       global: {
-        plugins: [store],
-      },
+        plugins: [store]
+      }
     })
 
     await wrapper.find('[name="reminder-date"]').setValue('2023-03-28')

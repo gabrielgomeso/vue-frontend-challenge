@@ -44,10 +44,24 @@
       </label>
 
       <div class="reminder-form__actions">
-        <button v-if="reminderToEdit == null" type="submit" @click="addReminder()">Add reminder</button>
-        <button v-if="reminderToEdit != null" type="submit" @click="editReminder(reminderToEdit.id)">Edit reminder</button>
+        <button v-if="reminderToEdit == null" type="submit" @click="addReminder()">
+          Add reminder
+        </button>
+        <button
+          v-if="reminderToEdit != null"
+          type="submit"
+          @click="editReminder(reminderToEdit.id)"
+        >
+          Edit reminder
+        </button>
         <button v-if="reminderToEdit != null" type="submit" @click="cancelEdit()">Cancel</button>
-        <button v-if="reminderToEdit != null" type="submit" @click="deleteReminder(reminderToEdit.id)">Delete reminder</button>
+        <button
+          v-if="reminderToEdit != null"
+          type="submit"
+          @click="deleteReminder(reminderToEdit.id)"
+        >
+          Delete reminder
+        </button>
       </div>
     </form>
   </div>
@@ -72,8 +86,8 @@ export default defineComponent({
   computed: {
     reminderToEdit() {
       const { reminderToEdit } = storeToRefs(useReminderStore())
-      return reminderToEdit.value;
-    },
+      return reminderToEdit.value
+    }
   },
   methods: {
     addReminder() {
@@ -144,11 +158,11 @@ export default defineComponent({
   watch: {
     reminderToEdit(newValue) {
       if (newValue !== null) {
-        this.reminderText = this.reminderToEdit.text;
-        this.reminderCity = this.reminderToEdit.city;
-        this.reminderColor = this.reminderToEdit.color;
+        this.reminderText = this.reminderToEdit.text
+        this.reminderCity = this.reminderToEdit.city
+        this.reminderColor = this.reminderToEdit.color
         this.reminderDate = this.reminderToEdit.date.toISOString().slice(0, 10)
-        this.reminderTime = this.reminderToEdit.time;
+        this.reminderTime = this.reminderToEdit.time
       }
     }
   }
