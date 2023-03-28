@@ -1,14 +1,18 @@
 # vue-frontend-challenge
+![image](https://user-images.githubusercontent.com/17833683/228368236-1c77af5e-2084-40b9-800f-0ea77c19db8d.png)
 
-This template should help get you started developing with Vue 3 in Vite.
+## About this project
+This is a simple 2023 Calendar that allows users to add reminders and shows the weather at that reminder's place and time. It's built with Vue 3 and Vite. It uses Vue 3 Options API, Pinia as state Manager, and Vitest with Vue Test Utils for testing. 
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### Project Settings
+- No Typescript
+- No JSX Support
+- No Vue Router
+- Pinia as state managment
+- Vitest for Unit Testing with Vue Testing Library
+- No End-to-End testing
+- ESLint for code quality
+- Prettier
 
 ## Project Setup
 
@@ -40,16 +44,4 @@ npm run test:unit
 npm run lint
 ```
 
-I did not use Vue-CLI since its in Maintenance Mode and Vue 3 now uses a create-vue scaffold by Vite
-So the new way is npm init vue@latest
-https://www.youtube.com/watch?v=XRTa0lNxxN4
 
-Project Settings
-No Typescript - 
-No JSX Support - 
-No Vue Router -
-Pinia as state managment
-Vitest for Unit Testing with Vue Testing Library
-No End-to-End testing
-ESLint for code quality
-Prettier
