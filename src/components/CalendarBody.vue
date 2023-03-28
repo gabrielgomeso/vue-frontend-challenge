@@ -1,9 +1,9 @@
 <template>
   <section class="calendar-body">
-    <h1 class="calendar-body__title">Jobsity's Calendar</h1>
+    <h1 class="calendar-body__title">Jobsity's 2023 Calendar</h1>
     <div class="calendar-body__months">
       <h3 @click="changeMonth(previousMonth)">← {{ previousMonth }}</h3>
-      <h2>{{ selectedMonthName }} {{ currentYear }}</h2>
+      <h2>{{ selectedMonthName }}</h2>
       <h3 @click="changeMonth(nextMonth)">{{ nextMonth }} →</h3>
     </div>
     <div class="calendar-body__main">
