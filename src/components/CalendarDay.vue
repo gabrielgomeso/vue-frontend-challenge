@@ -46,6 +46,7 @@ export default defineComponent({
   background-color: var(--vt-c-white-soft);
   min-width: 100px;
   min-height: 120px;
+  cursor: pointer;
 }
 
 .calendar-day__reminder-list {
