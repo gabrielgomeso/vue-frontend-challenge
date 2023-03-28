@@ -21,6 +21,13 @@
         {{ reminder.city }}
         ({{ reminder.weather }})
       </span>
+
+      <button
+        type="button"
+        class="reminder-list__delete-all-button"
+        @click="deleteAllRemindersFromDate(fetchedReminders)">
+          Delete all
+        </button>
     </div>
     
   </section>
@@ -44,7 +51,7 @@ export default defineComponent({
       const { selectedDay } = useReminderStore()
       return selectedDay
     },
-    reminders() {
+    remindersOfDate() {
       const { remindersOfDate } = useReminderStore()
       const reminders = remindersOfDate(this.selectedDay);
 
@@ -71,13 +78,24 @@ export default defineComponent({
       }
     },
     async remindersWithWeather() {
-      const reminders = this.reminders;
+      const reminders = this.remindersOfDate;
       for (const reminder of reminders) {
         const weather = await this.fetchReminderWeather(reminder);
         reminder.weather = weather;
       }
       this.fetchedReminders = reminders;
       this.isLoading = false;
+    },
+    deleteAllRemindersFromDate(remindersToDelete) {
+      const { reminders } = storeToRefs(useReminderStore());
+
+      reminders.value = reminders.value.filter(reminder => {
+        return !remindersToDelete.some(deleteReminder => {
+          return deleteReminder.id === reminder.id;
+        });
+      });
+
+      this.fetchedReminders = []
     }
   },
   async beforeMount() {
@@ -113,6 +131,12 @@ export default defineComponent({
 .reminder-list__reminder:hover:after {
   content: '- Edit';
   cursor: pointer;
+}
+
+.reminder-list__delete-all-button {
+  width: 200px;
+  margin: 15px auto;
+
 }
 
 .loading {
