@@ -26,102 +26,84 @@
   </section>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { computed, watchEffect, ref } from 'vue'
 import CalendarDay from './CalendarDay.vue'
 import { useReminderStore } from '../stores/reminderStore'
 import { storeToRefs } from 'pinia'
 
-export default defineComponent({
-  name: 'CalendarBody',
-  components: {
-    CalendarDay
-  },
-  data() {
-    return {
-      currentDate: new Date(),
-      selectedDay: 0,
-      monthNames: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ]
-    }
-  },
-  methods: {
-    isCurrentDay(day) {
-      const { selectedMonth } = storeToRefs(useReminderStore())
+const currentDate = ref(new Date());
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
 
-      if (this.currentDate.getDate() === day && selectedMonth.value == this.currentMonth) {
-        return true
-      }
-      return false
-    },
-    selectNewDay(day) {
-      const { selectedDay, selectedMonth } = storeToRefs(useReminderStore())
-      selectedDay.value = new Date(2023, selectedMonth.value, day)
-    },
-    changeMonth(month) {
-      const { selectedMonth } = storeToRefs(useReminderStore())
-      const newMonth = this.monthNames.findIndex((element) => element == month)
-      selectedMonth.value = newMonth
-    }
-  },
-  computed: {
-    startDayColumn() {
-      const { selectedMonth } = storeToRefs(useReminderStore())
-      const firstDayOfWeek = new Date(this.currentYear, selectedMonth.value, 1).getDay()
-      return firstDayOfWeek + 1 // Add 1 to make it 1-indexed for grid-column-start
-    },
-    currentMonth() {
-      return this.currentDate.getMonth()
-    },
-    currentYear() {
-      return this.currentDate.getFullYear()
-    },
-    totalDaysInSelectedMonth() {
-      const { totalDaysInSelectedMonth } = useReminderStore()
-      return totalDaysInSelectedMonth
-    },
-    selectedMonthName() {
-      const { selectedMonth } = storeToRefs(useReminderStore())
-      return this.monthNames[selectedMonth.value]
-    },
-    nextMonth() {
-      const { selectedMonth } = storeToRefs(useReminderStore())
-      if (selectedMonth.value + 1 == 12) {
-        return this.monthNames[0]
-      }
-      return this.monthNames[selectedMonth.value + 1]
-    },
-    previousMonth() {
-      const { selectedMonth } = storeToRefs(useReminderStore())
-      if (selectedMonth.value - 1 == -1) {
-        return this.monthNames[11]
-      }
-      return this.monthNames[selectedMonth.value - 1]
-    }
-  },
-  watch: {
-    selectedMonthName(newValue) {
-      const { totalDaysInSelectedMonth } = storeToRefs(useReminderStore())
-      totalDaysInSelectedMonth.value = new Date(
-        this.currentYear,
-        this.monthNames.indexOf(newValue) + 1,
-        0
-      ).getDate()
-    }
+const { selectedDay, selectedMonth, totalDaysInSelectedMonth } = storeToRefs(useReminderStore())
+
+function isCurrentDay(day) {
+  if (currentDate.value.getDate() === day && selectedMonth.value == currentMonth.value) {
+    return true
   }
-})
+  return false
+}
+
+function selectNewDay(day) {
+  selectedDay.value = new Date(2023, selectedMonth.value, day)
+}
+
+function changeMonth(month) {
+  const newMonth = monthNames.findIndex((element) => element == month)
+  selectedMonth.value = newMonth
+}
+
+const startDayColumn = computed(() => {
+  const firstDayOfWeek = new Date(currentYear.value, selectedMonth.value, 1).getDay()
+  return firstDayOfWeek + 1
+});
+
+const currentMonth = computed(() => {
+  return currentDate.value.getMonth()
+});
+
+const currentYear = computed(() => {
+  return currentDate.value.getFullYear()
+});
+
+const selectedMonthName = computed(() => {
+  return monthNames[selectedMonth.value]
+});
+
+const nextMonth = computed(() => {
+  if (selectedMonth.value + 1 == 12) {
+    return monthNames[0]
+  }
+  return monthNames[selectedMonth.value + 1]
+});
+
+const previousMonth = computed(() => {
+  if (selectedMonth.value - 1 == -1) {
+    return monthNames[11]
+  }
+  return monthNames[selectedMonth.value - 1]
+});
+
+watchEffect((selectedMonthName) => {
+  totalDaysInSelectedMonth.value = new Date(
+    currentYear.value,
+    monthNames.indexOf(selectedMonthName) + 1,
+    0
+  ).getDate()
+});
 </script>
 
 <style>
