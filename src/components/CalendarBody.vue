@@ -17,7 +17,7 @@
       <CalendarDay
         v-for="(day, index) in totalDaysInSelectedMonth"
         :key="day"
-        :class="{ 'current-day': isCurrentDay(day) }"
+        :class="{ 'calendar-body__current-day': isCurrentDay(day) }"
         :style="{ gridColumnStart: index === 0 ? startDayColumn : 'auto' }"
         :day="day"
         @click="selectNewDay(day)"
@@ -146,7 +146,7 @@ export default defineComponent({
   background-color: blueviolet;
 }
 
-.current-day {
+.calendar-body__current-day {
   background-color: gray;
 }
 </style>
