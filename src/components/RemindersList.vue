@@ -26,6 +26,7 @@
         type="button"
         class="reminder-list__delete-all-button"
         @click="deleteAllRemindersFromDate(fetchedReminders)"
+        v-if="fetchedReminders.length > 0"
       >
         Delete all
       </button>
