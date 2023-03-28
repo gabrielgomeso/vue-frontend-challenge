@@ -7,20 +7,11 @@
       <div></div>
     </div>
     <div v-else class="reminder-list__list">
-      <span
-        class="reminder-list__reminder"
+      <ReminderCard
         v-for="(reminder, index) in fetchedReminders"
         :key="index"
-        @click="editReminder(reminder)"
-      >
-        <span
-          class="reminder-list__reminder--color"
-          :style="{ backgroundColor: reminder.color }"
-        ></span>
-        {{ reminder.text }} - {{ reminder.time }} - {{ reminder.date.toLocaleDateString() }} At
-        {{ reminder.city }}
-        ({{ reminder.weather }})
-      </span>
+        :reminder="reminder"
+      />
 
       <button
         type="button"
@@ -38,9 +29,13 @@
 import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useReminderStore } from '../stores/reminderStore'
+import ReminderCard from './ReminderCard.vue'
 
 export default defineComponent({
   name: 'ReminderList',
+  components: {
+    ReminderCard,
+  },
   data() {
     return {
       fetchedReminders: [],
@@ -60,10 +55,6 @@ export default defineComponent({
     }
   },
   methods: {
-    editReminder(reminder) {
-      const { reminderToEdit } = storeToRefs(useReminderStore())
-      reminderToEdit.value = reminder
-    },
     async fetchReminderWeather(reminder) {
       this.isLoading = true
       const { city, date } = reminder
@@ -119,21 +110,7 @@ export default defineComponent({
 .reminder-list__list {
   display: flex;
   flex-direction: column;
-}
-
-.reminder-list__reminder {
-  text-align: justify;
-}
-
-.reminder-list__reminder--color {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-}
-
-.reminder-list__reminder:hover:after {
-  content: '- Edit';
-  cursor: pointer;
+  gap: 5px;
 }
 
 .reminder-list__delete-all-button {
