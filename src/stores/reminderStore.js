@@ -49,11 +49,28 @@ export const useReminderStore = defineStore('reminder', () => {
     }
   }
 
+  function sortReminders(reminders) {
+    return reminders.sort((a, b) => {
+      const timeA = a.time;
+      const timeB = b.time;
+
+      if (timeA < timeB) {
+        return -1;
+      } else if (timeA > timeB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
   function remindersOfDate(date) {
     const remindersOfDay = reminders.value.filter(
       (reminder) => new Date(reminder.date).getTime() === date.getTime()
     )
-    return remindersOfDay
+
+    const sortedReminders = sortReminders(remindersOfDay)
+    return sortedReminders
   }
 
   return {
