@@ -63,8 +63,8 @@ export default defineComponent({
       return false
     },
     selectNewDay(day) {
-      const { selectedDay } = storeToRefs(useReminderStore())
-      selectedDay.value = new Date(2023, 2, day)
+      const { selectedDay, selectedMonth } = storeToRefs(useReminderStore())
+      selectedDay.value = new Date(2023, selectedMonth.value, day)
     },
     changeMonth(month) {
       const { selectedMonth } = storeToRefs(useReminderStore())
