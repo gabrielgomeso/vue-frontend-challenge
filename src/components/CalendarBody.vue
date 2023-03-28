@@ -1,9 +1,11 @@
 <template>
   <section class="calendar-body">
     <h1 class="calendar-body__title">Jobsity's Calendar</h1>
-    <h3 @click="changeMonth(previousMonth)">← {{ previousMonth }}</h3>
-    <h2>{{ selectedMonthName }} {{  currentYear }}</h2>
-    <h3 @click="changeMonth(nextMonth)">{{ nextMonth }} →</h3>
+    <div class="calendar-body__months">
+      <h3 @click="changeMonth(previousMonth)">← {{ previousMonth }}</h3>
+      <h2>{{ selectedMonthName }} {{  currentYear }}</h2>
+      <h3 @click="changeMonth(nextMonth)">{{ nextMonth }} →</h3>
+    </div>
     <div class="calendar-body__main">
       <span class="calendar-body__main--week-days">Sunday</span>
       <span class="calendar-body__main--week-days">Monday</span>
@@ -121,6 +123,15 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
+}
+
+.calendar-body__months {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.calendar-body__months h3 {
+  cursor: pointer;
 }
 
 .calendar-body__main--week-days {
