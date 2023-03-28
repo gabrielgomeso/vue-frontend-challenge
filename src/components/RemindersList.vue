@@ -25,11 +25,11 @@
       <button
         type="button"
         class="reminder-list__delete-all-button"
-        @click="deleteAllRemindersFromDate(fetchedReminders)">
-          Delete all
-        </button>
+        @click="deleteAllRemindersFromDate(fetchedReminders)"
+      >
+        Delete all
+      </button>
     </div>
-    
   </section>
 </template>
 
@@ -43,7 +43,7 @@ export default defineComponent({
   data() {
     return {
       fetchedReminders: [],
-      isLoading: true,
+      isLoading: true
     }
   },
   computed: {
@@ -53,10 +53,10 @@ export default defineComponent({
     },
     remindersOfDate() {
       const { remindersOfDate } = useReminderStore()
-      const reminders = remindersOfDate(this.selectedDay);
+      const reminders = remindersOfDate(this.selectedDay)
 
       return reminders
-    },
+    }
   },
   methods: {
     editReminder(reminder) {
@@ -64,36 +64,38 @@ export default defineComponent({
       reminderToEdit.value = reminder
     },
     async fetchReminderWeather(reminder) {
-      this.isLoading = true;
-      const { city, date } = reminder;
-      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${import.meta.env.VITE_OPEN_WEATHER_KEY}&dt=${date}`;
+      this.isLoading = true
+      const { city, date } = reminder
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${
+        import.meta.env.VITE_OPEN_WEATHER_KEY
+      }&dt=${date}`
 
       try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        return data.weather[0].description;
+        const response = await fetch(apiUrl)
+        const data = await response.json()
+        return data.weather[0].description
       } catch (error) {
-        console.error(error);
-        return "No weather info for this city";
+        console.error(error)
+        return 'No weather info for this city'
       }
     },
     async remindersWithWeather() {
-      const reminders = this.remindersOfDate;
+      const reminders = this.remindersOfDate
       for (const reminder of reminders) {
-        const weather = await this.fetchReminderWeather(reminder);
-        reminder.weather = weather;
+        const weather = await this.fetchReminderWeather(reminder)
+        reminder.weather = weather
       }
-      this.fetchedReminders = reminders;
-      this.isLoading = false;
+      this.fetchedReminders = reminders
+      this.isLoading = false
     },
     deleteAllRemindersFromDate(remindersToDelete) {
-      const { reminders } = storeToRefs(useReminderStore());
+      const { reminders } = storeToRefs(useReminderStore())
 
-      reminders.value = reminders.value.filter(reminder => {
-        return !remindersToDelete.some(deleteReminder => {
-          return deleteReminder.id === reminder.id;
-        });
-      });
+      reminders.value = reminders.value.filter((reminder) => {
+        return !remindersToDelete.some((deleteReminder) => {
+          return deleteReminder.id === reminder.id
+        })
+      })
 
       this.fetchedReminders = []
     }
@@ -136,7 +138,6 @@ export default defineComponent({
 .reminder-list__delete-all-button {
   width: 200px;
   margin: 15px auto;
-
 }
 
 .loading {

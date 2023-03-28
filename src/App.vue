@@ -23,8 +23,6 @@ export default defineComponent({
 </script>
 
 <style>
-
-
 .calendar-actions {
   margin-top: 2rem;
   display: grid;
