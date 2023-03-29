@@ -1,5 +1,6 @@
 # vue-frontend-challenge
-![image](https://user-images.githubusercontent.com/17833683/228368236-1c77af5e-2084-40b9-800f-0ea77c19db8d.png)
+![image](https://user-images.githubusercontent.com/17833683/228385396-6073c04c-9ade-4f4a-adb0-f857bd389aa7.png)
+
 
 ## About this project
 This is a simple 2023 Calendar that allows users to add reminders and shows the weather at that reminder's place and time. It's built with Vue 3 and Vite. It uses Vue 3 Options API, Pinia as state Manager, and Vitest with Vue Test Utils for testing.
