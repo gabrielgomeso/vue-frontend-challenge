@@ -11,7 +11,7 @@ export const useReminderStore = defineStore('reminder', () => {
       id: 1,
       date: new Date(2023, 2, 31),
       time: '12:00',
-      text: 'Gabriel Gomes gets the job',
+      text: 'Hire Gabriel',
       city: 'Caraguatatuba',
       color: 'green'
     },
@@ -19,7 +19,7 @@ export const useReminderStore = defineStore('reminder', () => {
       id: 2,
       date: new Date(2023, 2, 2),
       time: '12:00',
-      text: 'Gabriel Gomes makes the test',
+      text: 'Send Gabriel the test',
       city: 'Sao Paulo',
       color: 'black'
     }
